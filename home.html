@@ -5,6 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MapMyUni</title>
   <link rel="stylesheet" href="./style.css" />
+  <style>
+    #chat-container {
+      margin-top: 2rem;
+      background-color: #fbe4f0;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    #chat-container h2 {
+      text-align: center;
+      color: #9b7fc9;
+    }
+    #chat-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    #question {
+      flex: 1;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      background-color: #9b7fc9;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #7c63b3;
+    }
+    #response {
+      margin-top: 20px;
+      padding: 1.5rem;
+      border-radius: 8px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      min-height: 100px;
+      white-space: pre-wrap;
+      font-size: 1.05rem;
+    }
+  </style>
 </head>
 <body>
 
@@ -49,21 +100,49 @@
         <p>Navigate easily with step-by-step directions to any location you need.</p>
       </div>
       <div class="card">
-        <h3>Find Professor's office</h3>
+        <h3>Find Professor's Office</h3>
         <p>Know exactly where each professor’s office is - no more guessing or asking around.</p>
       </div>
     </div>
 
-    <div class="cta-section">
-      <h2>Ready to Get Started?</h2>
-      <p>Click below to join us today and build amazing things!</p>
-      <button>Join Now</button>
+    <!-- AI Chat Section -->
+    <div id="chat-container">
+      <h2>Chat with AI Assistant</h2>
+      <div id="chat-row">
+        <input type="text" id="question" placeholder="Enter your question about a professor..." />
+        <button onclick="sendQuestion()">Send</button>
+      </div>
+      <div id="response">The response will appear here.</div>
     </div>
   </div>
 
   <footer>
     &copy; 2025 MapMyUni. All rights reserved.
   </footer>
+
+  <script>
+    async function sendQuestion() {
+      const input = document.getElementById("question");
+      const output = document.getElementById("response");
+      if (input.value.trim() === "") {
+        output.innerText = "Please enter a question.";
+        return;
+      }
+      output.innerText = "⏳ Waiting for response...";
+      try {
+        const res = await fetch("http://localhost:3000/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pitanje: input.value })
+        });
+        const data = await res.json();
+        output.innerText = data.odgovor;
+      } catch (err) {
+        output.innerText = "Error communicating with the server.";
+        console.error(err);
+      }
+    }
+  </script>
 
 </body>
 </html>
