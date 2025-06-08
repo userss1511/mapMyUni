@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - MapMyUni</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f5efff, #ece2f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #login-form {
+      background: #fff;
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 380px;
+      transition: all 0.3s ease-in-out;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    #login-form h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: #5f4b8b;
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px 12px 40px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group i {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      color: #999;
+    }
+
+    .form-group input:focus {
+      border-color: #a085cc;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #a085cc;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #8d71be;
+      transform: scale(1.03);
+    }
+
+    #message {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #5f4b8b;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="login-form">
+    <h2>Login</h2>
+
+    <div class="form-group">
+      <i class="fas fa-user"></i>
+      <input type="text" placeholder="Username" id="username" required />
+    </div>
+
+    <div class="form-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" placeholder="Password" id="password" required />
+    </div>
+
+    <button type="submit">Login</button>
+    <div id="message"></div>
+  </form>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const res = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await res.json();
+      document.getElementById("message").innerText = data.message;
+
+      if (data.success) {
+        window.location.href = "home.html";
+      }
+    });
+  </script>
+
+</body>
+</html>
