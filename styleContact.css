@@ -1,0 +1,130 @@
+:root {
+  --primary: #d8c4f0;         /* Light Lila */
+  --primary-dark: #9b7fc9;    /* Deep Lila */
+  --accent: #f7b2d9;          /* Soft Pink */
+  --text-color: #333333;      
+  --muted-text: #555555;
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --background: #f9f6fc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--background);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+header {
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  color: white;
+  padding: 1rem 2rem;
+  position: relative;
+}
+
+nav {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav .logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+nav input[type="checkbox"] {
+  display: none;
+}
+
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 30px;
+}
+
+.menu-icon span {
+  height: 3px;
+  background: white;
+  margin: 5px 0;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.menu {
+  display: flex;
+  gap: 1rem;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .menu-icon {
+    display: flex;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--primary-dark);
+    padding: 1rem 0;
+  }
+
+  nav input:checked ~ .menu {
+    display: flex;
+  }
+
+  nav input:checked ~ .menu-icon span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  nav input:checked ~ .menu-icon span:nth-child(2) {
+    opacity: 0;
+  }
+
+  nav input:checked ~ .menu-icon span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  .menu a {
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+.contact {
+    margin-left: 50px;
+    margin-right: 50px;
+    font-family: sans-serif;
+
+}
+
+#contactTitle {
+    padding: 10px 0px;
+}
+
+.card {
+    padding-left: 15px;
+    border-left: 3px solid #9b7fc9;
+    background: #f4effa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
